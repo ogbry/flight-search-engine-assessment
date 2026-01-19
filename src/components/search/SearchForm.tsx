@@ -116,15 +116,15 @@ export function SearchForm({ onSearch }: SearchFormProps) {
           </button>
         </div>
 
-        {/* Dates, Passengers, Search - responsive grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Dates - Stacked vertically, full width */}
+        <div className="space-y-4">
           {/* Departure Date */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Departure
             </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                 <Calendar className="h-5 w-5 text-gray-400" />
               </div>
               <input
@@ -134,19 +134,19 @@ export function SearchForm({ onSearch }: SearchFormProps) {
                   updateSearchParams({ departureDate: e.target.value })
                 }
                 min={new Date().toISOString().split('T')[0]}
-                className="input-field pl-10"
+                className="w-full px-3 py-2.5 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-sm min-w-0"
               />
             </div>
           </div>
 
-          {/* Return Date */}
+          {/* Return Date - Only show for round-trip */}
           {searchParams.tripType === 'round-trip' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Return
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="relative overflow-hidden">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                   <Calendar className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
@@ -156,24 +156,25 @@ export function SearchForm({ onSearch }: SearchFormProps) {
                     updateSearchParams({ returnDate: e.target.value })
                   }
                   min={searchParams.departureDate}
-                  className="input-field pl-10"
+                  className="w-full px-3 py-2.5 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-sm min-w-0"
                 />
               </div>
             </div>
           )}
+        </div>
 
+        {/* Passengers and Search Button */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Passengers */}
-          <div className={searchParams.tripType === 'one-way' ? 'sm:col-span-2 lg:col-span-1' : ''}>
-            <PassengerSelector
-              adults={searchParams.adults}
-              children={searchParams.children}
-              infants={searchParams.infants}
-              onChange={(passengers) => updateSearchParams(passengers)}
-            />
-          </div>
+          <PassengerSelector
+            adults={searchParams.adults}
+            children={searchParams.children}
+            infants={searchParams.infants}
+            onChange={(passengers) => updateSearchParams(passengers)}
+          />
 
           {/* Search Button */}
-          <div className={`flex items-end ${searchParams.tripType === 'one-way' ? 'sm:col-span-2 lg:col-span-1' : 'sm:col-span-2 lg:col-span-1'}`}>
+          <div className="flex items-end">
             <button
               type="submit"
               disabled={isLoading}

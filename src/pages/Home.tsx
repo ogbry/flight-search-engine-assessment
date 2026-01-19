@@ -40,7 +40,7 @@ export function Home() {
           </div>
 
           {/* Search Card */}
-          <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto overflow-hidden">
             <SearchForm onSearch={handleSearch} />
           </div>
         </div>
