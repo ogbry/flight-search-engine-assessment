@@ -6,13 +6,15 @@ import { SearchForm } from '../components/search/SearchForm';
 import { FlightList } from '../components/results/FlightList';
 import { FilterPanel } from '../components/filters/FilterPanel';
 import { PriceGraph } from '../components/charts/PriceGraph';
-import { hasSearchedAtom, flightResultsAtom, searchParamsAtom } from '../atoms/flightAtoms';
+import { PriceGraphSkeleton, FilterPanelSkeleton } from '../components/common/Skeletons';
+import { hasSearchedAtom, flightResultsAtom, searchParamsAtom, isLoadingAtom } from '../atoms/flightAtoms';
 
 export function Results() {
   const hasSearched = useRecoilValue(hasSearchedAtom);
   const flights = useRecoilValue(flightResultsAtom);
   const searchParams = useRecoilValue(searchParamsAtom);
-  const showSidebar = hasSearched && flights.length > 0;
+  const isLoading = useRecoilValue(isLoadingAtom);
+  const showSidebar = hasSearched && (flights.length > 0 || isLoading);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
   // Create search summary for collapsed view
@@ -87,23 +89,29 @@ export function Results() {
           {/* Sidebar - Desktop only */}
           {showSidebar && (
             <aside className="hidden lg:block lg:w-72 flex-shrink-0 space-y-6">
-              {/* Price Graph */}
-              <PriceGraph />
-
-              {/* Filters */}
-              <FilterPanel />
+              {isLoading ? (
+                <>
+                  <PriceGraphSkeleton />
+                  <FilterPanelSkeleton />
+                </>
+              ) : (
+                <>
+                  <PriceGraph />
+                  <FilterPanel />
+                </>
+              )}
             </aside>
           )}
 
           {/* Flight Results */}
           <div className="flex-1 min-w-0">
             {/* Mobile Filters */}
-            {showSidebar && <FilterPanel className="lg:hidden" />}
+            {showSidebar && !isLoading && <FilterPanel className="lg:hidden" />}
 
             {/* Mobile Price Graph */}
             {showSidebar && (
               <div className="lg:hidden mb-4">
-                <PriceGraph />
+                {isLoading ? <PriceGraphSkeleton /> : <PriceGraph />}
               </div>
             )}
 

@@ -23,6 +23,7 @@ export default {
       animation: {
         'slide-in': 'slideIn 0.3s ease-out',
         'fade-in': 'fadeIn 0.2s ease-out',
+        'shimmer': 'shimmer 1.5s infinite',
       },
       keyframes: {
         slideIn: {
@@ -32,6 +33,9 @@ export default {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
+        },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
         },
       },
     },
