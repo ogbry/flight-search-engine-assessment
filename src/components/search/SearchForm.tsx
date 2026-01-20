@@ -1,7 +1,8 @@
-import { ArrowRightLeft, ArrowDownUp, Calendar, Search } from 'lucide-react';
+import { ArrowRightLeft, ArrowDownUp, Search } from 'lucide-react';
 import { useFlightSearch } from '../../hooks/useFlightSearch';
 import { AirportAutocomplete } from './AirportAutocomplete';
 import { PassengerSelector } from './PassengerSelector';
+import { DateInput } from '../common/DateInput';
 import type { CabinClass, TripType } from '../../types/flight';
 
 interface SearchFormProps {
@@ -116,50 +117,24 @@ export function SearchForm({ onSearch }: SearchFormProps) {
           </button>
         </div>
 
-        {/* Dates - Stacked vertically, full width */}
-        <div className="space-y-4">
+        {/* Dates - Side by side on lg+, stacked on mobile */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Departure Date */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Departure
-            </label>
-            <div className="relative overflow-hidden">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                <Calendar className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="date"
-                value={searchParams.departureDate}
-                onChange={(e) =>
-                  updateSearchParams({ departureDate: e.target.value })
-                }
-                min={new Date().toISOString().split('T')[0]}
-                className="w-full px-3 py-2.5 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-sm min-w-0"
-              />
-            </div>
-          </div>
+          <DateInput
+            label="Departure"
+            value={searchParams.departureDate}
+            onChange={(value) => updateSearchParams({ departureDate: value })}
+            min={new Date().toISOString().split('T')[0]}
+          />
 
           {/* Return Date - Only show for round-trip */}
           {searchParams.tripType === 'round-trip' && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Return
-              </label>
-              <div className="relative overflow-hidden">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                  <Calendar className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="date"
-                  value={searchParams.returnDate || ''}
-                  onChange={(e) =>
-                    updateSearchParams({ returnDate: e.target.value })
-                  }
-                  min={searchParams.departureDate}
-                  className="w-full px-3 py-2.5 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-sm min-w-0"
-                />
-              </div>
-            </div>
+            <DateInput
+              label="Return"
+              value={searchParams.returnDate || ''}
+              onChange={(value) => updateSearchParams({ returnDate: value })}
+              min={searchParams.departureDate}
+            />
           )}
         </div>
 

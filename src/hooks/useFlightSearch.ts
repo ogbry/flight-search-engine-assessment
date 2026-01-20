@@ -12,6 +12,7 @@ import {
 import { amadeusAPI } from '../api/amadeus';
 import type { SearchParams } from '../types/flight';
 import { getDefaultFilters } from '../utils/filterUtils';
+import { saveRecentSearch } from '../components/common/RecentSearches';
 
 export function useFlightSearch() {
   const [searchParams, setSearchParams] = useRecoilState(searchParamsAtom);
@@ -52,6 +53,17 @@ export function useFlightSearch() {
         // Reset filters with new price range
         if (response.data && response.data.length > 0) {
           setFilterState(getDefaultFilters(response.data));
+        }
+
+        // Save to recent searches
+        if (searchPayload.origin && searchPayload.destination) {
+          saveRecentSearch({
+            origin: searchPayload.origin,
+            destination: searchPayload.destination,
+            departureDate: searchPayload.departureDate,
+            returnDate: searchPayload.returnDate,
+            passengers: searchPayload.adults + (searchPayload.children || 0) + (searchPayload.infants || 0),
+          });
         }
       } catch (err) {
         const message = err instanceof Error ? err.message : 'An error occurred';
