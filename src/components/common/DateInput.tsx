@@ -50,7 +50,7 @@ export function DateInput({ label, value, onChange, min }: DateInputProps) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           min={min}
-          className="absolute inset-0 opacity-0 cursor-pointer z-20"
+          className="absolute inset-0 opacity-0 cursor-pointer"
         />
 
         {/* Custom display */}

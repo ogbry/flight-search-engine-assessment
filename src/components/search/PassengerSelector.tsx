@@ -1,11 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
-import { Users, Plus, Minus } from 'lucide-react';
+import { useState, useRef, useEffect } from "react";
+import { Users, Plus, Minus } from "lucide-react";
 
 interface PassengerSelectorProps {
   adults: number;
   children: number;
   infants: number;
-  onChange: (passengers: { adults: number; children: number; infants: number }) => void;
+  onChange: (passengers: {
+    adults: number;
+    children: number;
+    infants: number;
+  }) => void;
 }
 
 export function PassengerSelector({
@@ -29,19 +33,22 @@ export function PassengerSelector({
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const updateCount = (
-    type: 'adults' | 'children' | 'infants',
+    type: "adults" | "children" | "infants",
     delta: number
   ) => {
     const newValue = { adults, children, infants };
-    newValue[type] = Math.max(type === 'adults' ? 1 : 0, newValue[type] + delta);
+    newValue[type] = Math.max(
+      type === "adults" ? 1 : 0,
+      newValue[type] + delta
+    );
 
     // Infants cannot exceed adults
-    if (type === 'infants' && newValue.infants > newValue.adults) {
+    if (type === "infants" && newValue.infants > newValue.adults) {
       return;
     }
 
@@ -63,7 +70,7 @@ export function PassengerSelector({
     label: string;
     description: string;
     count: number;
-    type: 'adults' | 'children' | 'infants';
+    type: "adults" | "children" | "infants";
     min: number;
   }) => (
     <div className="flex items-center justify-between py-3">
@@ -105,12 +112,12 @@ export function PassengerSelector({
       >
         <Users className="w-5 h-5 text-gray-400" />
         <span>
-          {totalPassengers} {totalPassengers === 1 ? 'Passenger' : 'Passengers'}
+          {totalPassengers} {totalPassengers === 1 ? "Passenger" : "Passengers"}
         </span>
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 w-72 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-4">
+        <div className="absolute z-[100] w-72 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl p-4">
           <PassengerRow
             label="Adults"
             description="Age 12+"

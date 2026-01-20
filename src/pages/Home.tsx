@@ -1,22 +1,22 @@
-import { useNavigate } from 'react-router-dom';
-import { Plane, Globe, Shield, Clock } from 'lucide-react';
-import { SearchForm } from '../components/search/SearchForm';
-import { RecentSearches } from '../components/common/RecentSearches';
-import { PopularDestinations } from '../components/common/PopularDestinations';
+import { useNavigate } from "react-router-dom";
+import { Plane, Globe, Shield, Clock } from "lucide-react";
+import { SearchForm } from "../components/search/SearchForm";
+import { RecentSearches } from "../components/common/RecentSearches";
+import { PopularDestinations } from "../components/common/PopularDestinations";
 
 export function Home() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    navigate('/results');
+    navigate("/results");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative">
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-10 overflow-hidden">
           <div className="absolute top-20 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-white rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-white rounded-full blur-3xl" />
         </div>
@@ -27,7 +27,9 @@ export function Home() {
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center">
               <Plane className="w-5 h-5 sm:w-7 sm:h-7 text-primary-600" />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">SkySearch</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              SkySearch
+            </h1>
           </div>
 
           {/* Tagline */}
@@ -36,13 +38,13 @@ export function Home() {
               Find Your Perfect Flight
             </h2>
             <p className="text-base sm:text-xl text-primary-100 max-w-2xl mx-auto px-4">
-              Search hundreds of airlines and compare prices to find the best deals
-              for your next adventure.
+              Search hundreds of airlines and compare prices to find the best
+              deals for your next adventure.
             </p>
           </div>
 
           {/* Search Card */}
-          <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto overflow-hidden">
+          <div className="relative z-10 bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
             <SearchForm onSearch={handleSearch} />
 
             {/* Recent Searches */}
@@ -87,8 +89,8 @@ export function Home() {
                 Best Price Guarantee
               </h4>
               <p className="text-sm sm:text-base text-gray-600">
-                Compare prices across multiple airlines to ensure you get the best
-                deal available.
+                Compare prices across multiple airlines to ensure you get the
+                best deal available.
               </p>
             </div>
 
@@ -113,10 +115,13 @@ export function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
             <Plane className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" />
-            <span className="font-semibold text-white text-sm sm:text-base">SkySearch</span>
+            <span className="font-semibold text-white text-sm sm:text-base">
+              SkySearch
+            </span>
           </div>
           <p className="text-xs sm:text-sm">
-            Powered by Amadeus API. Flight data is for demonstration purposes only.
+            Powered by Amadeus API. Flight data is for demonstration purposes
+            only.
           </p>
         </div>
       </footer>
